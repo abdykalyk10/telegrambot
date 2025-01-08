@@ -132,7 +132,7 @@ ENV/
 env.bak/
 venv.bak/
 .idea/
-
+.unique_users.txt
 # Spyder project settings
 .spyderproject
 .spyproject
