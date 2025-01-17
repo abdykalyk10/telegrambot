@@ -3,6 +3,7 @@ from aiogram.filters import Command
 
 start_router = Router()
 
+
 @start_router.message(Command("start"))
 async def start_command(message: types.Message):
     greeting = (
@@ -15,7 +16,7 @@ async def start_command(message: types.Message):
     kb = types.InlineKeyboardMarkup(
         inline_keyboard=[
             [types.InlineKeyboardButton(text='Каталог блюд', callback_data='gffsdfv'),
-            types.InlineKeyboardButton(text='Обратная связь', callback_data='sdfaf')],
+             types.InlineKeyboardButton(text='Обратная связь', callback_data='sdfaf')],
             [types.InlineKeyboardButton(text='Оставить отзыв', callback_data='review')],
             [types.InlineKeyboardButton(text='Корзина', callback_data='dsfafa')],
             [types.InlineKeyboardButton(text='Реклама', callback_data='asdf')]
