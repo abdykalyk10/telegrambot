@@ -1,4 +1,4 @@
-from aiogram import Router, types
+from aiogram import Router,F, types
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
@@ -7,6 +7,7 @@ from bot_config import database
 
 dishadmin_router = Router()
 
+dishadmin_router.message.filter(F.from_user.id == 7886309988)
 
 class Menu(StatesGroup):
     name_dish = State()
