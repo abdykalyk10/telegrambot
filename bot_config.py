@@ -9,4 +9,4 @@ TOKEN = os.getenv("TOKEN")
 
 bot = Bot(token=TOKEN)
 dp = Dispatcher()
-database = Database('db.sqlite3')
+database = Database('d_b.sqlite3')
