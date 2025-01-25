@@ -1,4 +1,6 @@
 import sqlite3
+from datetime import date
+from datetime import datetime
 
 class Database:
     def __init__(self, path: str):
@@ -15,7 +17,8 @@ class Database:
                 phone_number TEXT,
                 rate INTEGER,
                 extra_comments TEXT,
-                user_id INTEGER
+                user_id INTEGER,
+                date TEXT
             )''')
             cursor.execute('''
             CREATE TABLE IF NOT EXISTS dishes (
@@ -29,10 +32,11 @@ class Database:
     def save_complaint(self, data: dict):
         with sqlite3.connect(self.path) as conn:
             conn.execute('''
-            INSERT INTO reviews(name, age, phone_number, rate, extra_comments, user_id) 
-            VALUES (?, ?, ?, ?, ?, ?)''',
+            INSERT INTO reviews(name, age, phone_number, rate, extra_comments, user_id, date) 
+            VALUES (?, ?, ?, ?, ?, ?, ?)''',
             (data['name'], data['age'], data['phone_number'],
-             data['rate'], data['extra_comments'], data['user_id']))
+             data['rate'], data['extra_comments'], data['user_id'],
+             data.get('date', datetime.now().strftime('%d/%m/%y'))))
 
     def save_dish(self, dish_data: dict):
 
@@ -45,3 +49,21 @@ class Database:
                                     dish_data['category']))
 
 
+    def get_dishes(self):
+        with sqlite3.connect(self.path) as conn:
+            cursor = conn.cursor()
+            result = cursor.execute('SELECT * FROM dishes')
+            result.row_factory = sqlite3.Row
+            data = result.fetchall()
+            return [dict(row) for row in data]
+
+
+    def get_reviews(self):
+
+            with sqlite3.connect(self.path) as conn:
+                cursor = conn.cursor()
+                result = cursor.execute('SELECT * FROM reviews')
+                result.row_factory = sqlite3.Row
+                data = result.fetchall()
+
+            return [dict(row) for row in data]

@@ -15,7 +15,7 @@ async def start_command(message: types.Message):
     )
     kb = types.InlineKeyboardMarkup(
         inline_keyboard=[
-            [types.InlineKeyboardButton(text='Каталог блюд', callback_data='gffsdfv'),
+            [types.InlineKeyboardButton(text='Каталог блюд', callback_data='dishes'),
              types.InlineKeyboardButton(text='Обратная связь', callback_data='sdfaf')],
             [types.InlineKeyboardButton(text='Оставить отзыв', callback_data='review')],
             [types.InlineKeyboardButton(text='Корзина', callback_data='dsfafa')],

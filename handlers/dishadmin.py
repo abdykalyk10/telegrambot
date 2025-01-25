@@ -1,13 +1,15 @@
-from aiogram import Router,F, types
+from aiogram import Router, F, types
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.filters import Command
 from bot_config import database
+from datetime import datetime, timedelta
 
 dishadmin_router = Router()
 
 dishadmin_router.message.filter(F.from_user.id == 7886309988)
+
 
 class Menu(StatesGroup):
     name_dish = State()
@@ -19,18 +21,18 @@ class Menu(StatesGroup):
 rating_kb = InlineKeyboardMarkup(
     inline_keyboard=[
         [InlineKeyboardButton(text='первое', callback_data='rating:первое')],
-            [InlineKeyboardButton(text='второе', callback_data='rating:второе')],
-            [InlineKeyboardButton(text='пицца', callback_data='rating:пицца')],
-            [InlineKeyboardButton(text='горячие напитки', callback_data='rating:горячие напитки')],
-            [InlineKeyboardButton(text='холодные напитки', callback_data='rating:холодные напитки')],
-            [InlineKeyboardButton(text='салаты', callback_data='rating:салаты')],
+        [InlineKeyboardButton(text='второе', callback_data='rating:второе')],
+        [InlineKeyboardButton(text='пицца', callback_data='rating:пицца')],
+        [InlineKeyboardButton(text='горячие напитки', callback_data='rating:горячие напитки')],
+        [InlineKeyboardButton(text='холодные напитки', callback_data='rating:холодные напитки')],
+        [InlineKeyboardButton(text='салаты', callback_data='rating:салаты')],
     ]
 )
 
 
 @dishadmin_router.message(Command('new_dish'))
 async def name_dish(message: types.Message, state: FSMContext):
-    await message.answer('Введите название блюда')
+    await message.answer('Введите название блюды ')
     await state.set_state(Menu.name_dish)
 
 
@@ -79,3 +81,16 @@ async def finish(callback_query: types.CallbackQuery, state: FSMContext):
         f"Категория: {dish_data['category']}"
     )
     await state.clear()
+
+@dishadmin_router.message(Command('reviews'))
+async def reviews_command(message: types.Message):
+    reviews = database.get_reviews()
+    reviews_text = "\n\n".join([f"Имя: {review['name']}\n"
+                                f"Возраст: {review['age']}\n"
+                                f"Телефон: {review['phone_number']}\n"
+                                f"Оценка: {review['rate']}\n"
+                                f"Комментарии: {review['extra_comments']}\n"
+                                f"Дата: {review['date']}" for review in reviews])
+
+    await message.answer(reviews_text)
+
