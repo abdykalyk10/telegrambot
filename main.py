@@ -8,7 +8,7 @@ from handlers.random_name import random_name_router
 from handlers.review_dialog import review_router
 from handlers.dishadmin import dishadmin_router
 from handlers.dishes import dishes_router, all_dishes
-
+from handlers.bot_ban import ban_ruter
 
 async def on_startup(bot: Bot):
 
@@ -23,6 +23,7 @@ async def main():
     dp.startup.register(on_startup)
     dp.include_router(dishadmin_router)
     dp.include_router(dishes_router)
+    dp.include_router(ban_ruter)
     await dp.start_polling(bot)
 
 if __name__ == '__main__':

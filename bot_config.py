@@ -1,11 +1,11 @@
 from aiogram import Bot, Dispatcher
-from dotenv import load_dotenv
+from dotenv import load_dotenv, dotenv_values
 from database import Database
-import os
+
 
 load_dotenv()
 
-TOKEN = os.getenv("TOKEN")
+TOKEN = dotenv_values(".env").get("TOKEN")
 
 bot = Bot(token=TOKEN)
 dp = Dispatcher()
